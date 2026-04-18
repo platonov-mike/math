@@ -44,22 +44,47 @@
   <div class="screen" id="screen-settings">
     <div class="card settings-card">
       <h2 class="settings-title">⚙️ Настройки</h2>
-      <p class="settings-desc">Выбери цифры для заданий:</p>
-      <div class="numbers-grid" id="numbers-grid"></div>
 
-      <div class="settings-mode">
-        <p class="settings-desc">Тип примеров:</p>
-        <div class="mode-btns">
-          <button class="mode-btn active" id="mode-mul" onclick="setMode('mul')">✖️ Умножение</button>
-          <button class="mode-btn" id="mode-div" onclick="setMode('div')">➗ Деление</button>
-          <button class="mode-btn" id="mode-both" onclick="setMode('both')">🔀 Оба</button>
+      <!-- Табы -->
+      <div class="settings-tabs">
+        <button class="stab active" id="stab-main"    onclick="switchTab('main')">🎯 Основные</button>
+        <button class="stab"        id="stab-history" onclick="switchTab('history')">📋 История</button>
+      </div>
+
+      <!-- Основные -->
+      <div class="stab-content" id="tab-main">
+        <p class="settings-desc">Выбери цифры для заданий:</p>
+        <div class="numbers-grid" id="numbers-grid"></div>
+
+        <div class="settings-mode">
+          <p class="settings-desc">Тип примеров:</p>
+          <div class="mode-btns">
+            <button class="mode-btn active" id="mode-mul" onclick="setMode('mul')">✖️ Умножение</button>
+            <button class="mode-btn" id="mode-div" onclick="setMode('div')">➗ Деление</button>
+            <button class="mode-btn" id="mode-both" onclick="setMode('both')">🔀 Оба</button>
+          </div>
+        </div>
+
+        <div class="settings-actions">
+          <button class="btn btn-back" onclick="goTo('screen-menu')">← Назад</button>
+          <button class="btn btn-start" onclick="saveSettings()">💾 Сохранить</button>
         </div>
       </div>
 
-      <div class="settings-actions">
-        <button class="btn btn-back" onclick="goTo('screen-menu')">← Назад</button>
-        <button class="btn btn-start" onclick="saveSettings()">💾 Сохранить</button>
+      <!-- История -->
+      <div class="stab-content hidden" id="tab-history">
+        <div class="history-header">
+          <span class="settings-desc" style="margin:0">Сессии по датам:</span>
+          <button class="btn-clear-history" onclick="clearHistory()">🗑 Очистить всё</button>
+        </div>
+        <div class="history-list" id="history-list">
+          <p class="history-empty">Пока нет записей</p>
+        </div>
+        <div class="settings-actions" style="margin-top:16px">
+          <button class="btn btn-back" onclick="goTo('screen-menu')">← Назад</button>
+        </div>
       </div>
+
     </div>
   </div>
 
