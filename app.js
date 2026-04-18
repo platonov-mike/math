@@ -1,3 +1,5 @@
+const SETTINGS_PASSWORD = 'Math'; // ← сюда свой пароль
+
 // ===== STATE =====
 const state = {
   selectedNums: [2, 3, 4, 5],
