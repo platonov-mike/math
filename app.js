@@ -11,7 +11,7 @@ const state = {
   bestScore: JSON.parse(localStorage.getItem('bestScore') || '0'),
 };
 
-const TOTAL_QUESTIONS = 10;
+const TOTAL_QUESTIONS = 25;
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
