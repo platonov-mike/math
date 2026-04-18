@@ -219,27 +219,61 @@ function clearHistory() {
 // ===== ГЕНЕРАЦИЯ ВОПРОСОВ =====
 function generateQuestions() {
   const nums = state.selectedNums;
-  const pool = [];
-  for (let i = 0; i < nums.length; i++)
-    for (let j = 0; j < nums.length; j++)
-      pool.push([nums[i], nums[j]]);
-  pool.sort(() => Math.random() - 0.5);
+  const mulPool = [];
+  const divPool = [];
+  const usedMul = new Set();
+  const usedDiv = new Set();
+
+  // Генерируем умножение: выбранное × 1..10 и 1..10 × выбранное
+  for (const n of nums) {
+    for (let m = 1; m <= 10; m++) {
+      // n × m
+      const key1 = `${n}×${m}`;
+      if (!usedMul.has(key1)) {
+        usedMul.add(key1);
+        mulPool.push({ a: n, b: m, answer: n * m });
+      }
+      // m × n
+      const key2 = `${m}×${n}`;
+      if (!usedMul.has(key2)) {
+        usedMul.add(key2);
+        mulPool.push({ a: m, b: n, answer: m * n });
+      }
+
+      // Деление: (n×m) ÷ n = m  или  (n×m) ÷ m = n
+      // Вариант 1: делитель из выбранных
+      const divKey1 = `${n*m}÷${n}`;
+      if (!usedDiv.has(divKey1)) {
+        usedDiv.add(divKey1);
+        divPool.push({ a: n * m, b: n, answer: m });
+      }
+      // Вариант 2: результат из выбранных
+      const divKey2 = `${n*m}÷${m}`;
+      if (!usedDiv.has(divKey2)) {
+        usedDiv.add(divKey2);
+        divPool.push({ a: n * m, b: m, answer: n });
+      }
+    }
+  }
+
+  // Перемешиваем
+  mulPool.sort(() => Math.random() - 0.5);
+  divPool.sort(() => Math.random() - 0.5);
 
   const questions = [];
   for (let i = 0; i < TOTAL_QUESTIONS; i++) {
-    const [a, b] = pool[i % pool.length];
     let type = state.mode;
     if (type === 'both') type = Math.random() < 0.5 ? 'mul' : 'div';
 
     let expr, answer;
     if (type === 'mul') {
-      expr   = `${a} × ${b}`;
-      answer = a * b;
+      const item = mulPool[i % mulPool.length];
+      expr = `${item.a} × ${item.b}`;
+      answer = item.answer;
     } else {
-      const product = a * b;
-      const divisor = b === 0 ? (a || 1) : b;
-      expr   = `${product} ÷ ${divisor}`;
-      answer = divisor === 0 ? product : Math.round(product / divisor);
+      const item = divPool[i % divPool.length];
+      expr = `${item.a} ÷ ${item.b}`;
+      answer = item.answer;
     }
     questions.push({ expr, answer, type });
   }
