@@ -316,3 +316,12 @@ window.goTo = function(id) {
   document.getElementById(id).classList.add('active');
   if (id === 'screen-menu') updateMenuBadge();
 };
+
+function askPassword() {
+  const entered = prompt('🔐 Введите пароль для настроек:');
+  if (entered === SETTINGS_PASSWORD) {
+    goTo('screen-settings');
+  } else if (entered !== null) {
+    alert('❌ Неверный пароль!');
+  }
+}
