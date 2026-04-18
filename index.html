@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Математика — Таблица умножения!</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Baloo+2:wght@700;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Плавающие облачка -->
+  <div class="cloud c1">☁️</div>
+  <div class="cloud c2">☁️</div>
+  <div class="cloud c3">☁️</div>
+  <div class="stars" id="stars"></div>
+
+  <!-- ===== ЭКРАН: МЕНЮ ===== -->
+  <div class="screen active" id="screen-menu">
+    <div class="card menu-card">
+      <div class="logo-wrap">
+        <span class="logo-emoji">🌟</span>
+        <h1 class="logo-title">МатеМагия</h1>
+        <p class="logo-sub">Учим таблицу умножения весело!</p>
+      </div>
+      <div class="mascot">🦄</div>
+      <div class="menu-btns">
+        <button class="btn btn-start" onclick="goTo('screen-settings-check')">
+          ▶ Начать!
+        </button>
+        <button class="btn btn-settings" onclick="goTo('screen-settings')">
+          ⚙️ Настройки
+        </button>
+      </div>
+      <div class="score-badge" id="menu-score-badge" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- ===== ЭКРАН: НАСТРОЙКИ ===== -->
+  <div class="screen" id="screen-settings">
+    <div class="card settings-card">
+      <h2 class="settings-title">⚙️ Настройки</h2>
+      <p class="settings-desc">Выбери цифры для заданий:</p>
+      <div class="numbers-grid" id="numbers-grid"></div>
+
+      <div class="settings-mode">
+        <p class="settings-desc">Тип примеров:</p>
+        <div class="mode-btns">
+          <button class="mode-btn active" id="mode-mul" onclick="setMode('mul')">✖️ Умножение</button>
+          <button class="mode-btn" id="mode-div" onclick="setMode('div')">➗ Деление</button>
+          <button class="mode-btn" id="mode-both" onclick="setMode('both')">🔀 Оба</button>
+        </div>
+      </div>
+
+      <div class="settings-actions">
+        <button class="btn btn-back" onclick="goTo('screen-menu')">← Назад</button>
+        <button class="btn btn-start" onclick="saveSettings()">💾 Сохранить</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ЭКРАН: ИГРА ===== -->
+  <div class="screen" id="screen-game">
+    <div class="card game-card">
+      <div class="game-header">
+        <button class="btn-icon" onclick="goTo('screen-menu')">🏠</button>
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+          <span class="progress-text" id="progress-text">0 / 10</span>
+        </div>
+        <div class="score-pill" id="score-pill">⭐ 0</div>
+      </div>
+
+      <div class="question-wrap">
+        <div class="question-emoji" id="question-emoji">🤔</div>
+        <div class="question-box" id="question-box">3 × 4 = ?</div>
+      </div>
+
+      <div class="answer-wrap">
+        <input class="answer-input" id="answer-input" type="number" inputmode="numeric"
+               placeholder="?" onkeydown="if(event.key==='Enter') checkAnswer()" />
+        <button class="btn btn-check" onclick="checkAnswer()">✓ Ответить</button>
+      </div>
+
+      <div class="feedback" id="feedback"></div>
+
+      <div class="choices-grid" id="choices-grid"></div>
+    </div>
+  </div>
+
+  <!-- ===== ЭКРАН: РЕЗУЛЬТАТ ===== -->
+  <div class="screen" id="screen-result">
+    <div class="card result-card">
+      <div class="result-emoji" id="result-emoji">🎉</div>
+      <h2 class="result-title" id="result-title">Молодец!</h2>
+      <p class="result-desc" id="result-desc">Ты решил 10 из 10!</p>
+      <div class="stars-row" id="stars-row"></div>
+      <div class="result-btns">
+        <button class="btn btn-start" onclick="startGame()">🔄 Ещё раз!</button>
+        <button class="btn btn-settings" onclick="goTo('screen-menu')">🏠 Меню</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
